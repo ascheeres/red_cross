@@ -196,12 +196,14 @@
     "<br>" + "<strong>Sanitation:</strong> " + " " + feature.properties.sanitation);
       layer.on({
         mouseover: function(e){
+          this.openPopup();
           layer.setStyle({
             radius: '6.0',
             fillOpacity: 1
           });
         },
         mouseout: function(e) {
+          this.closePopup();
           layer.setStyle(pointStyle(feature));
         },
       });
@@ -482,21 +484,12 @@ $("#text").click(function() {
    defaultViewFunc();
  }).addTo(map);
 
-// Create overlay legend
-// var overlay_legend = L.control({position: 'bottomright'});
-//
-// overlay_legend.onAdd = function(map) {
-//
-//     var div = L.DomUtil.create('div', 'info legend title'),
-//           grades =
-// }
-
 // Create overall vulnerability legend
   var vuln_legend = L.control({position: 'bottomright'});
 
   vuln_legend.onAdd = function (map) {
 
-      var div = L.DomUtil.create('div', 'info legend title'),
+      var div = L.DomUtil.create('div', 'info legend title vuln_legend'),
           grades = ["Medium", "High", "Very High", "Highest"];
 
       div.innerHTML += '<b>Overall Vulnerability</b><br>';  // don't forget the break tag
@@ -517,7 +510,7 @@ $("#text").click(function() {
 
   water_legend.onAdd = function (map) {
 
-      var div = L.DomUtil.create('div', 'info legend title'),
+      var div = L.DomUtil.create('div', 'info legend title water_legend'),
           grades = ["Medium", "High", "Very High", "Highest"];
 
       div.innerHTML += '<b>Water Vulnerability</b><br>';
@@ -532,15 +525,15 @@ $("#text").click(function() {
       return div;
   };
 
-  // Create water vulnerability legend
+  // Create sanitation vulnerability legend
   var san_legend = L.control({position: 'bottomright'});
 
-  water_legend.onAdd = function (map) {
+  san_legend.onAdd = function (map) {
 
-      var div = L.DomUtil.create('div', 'info legend title'),
+      var div = L.DomUtil.create('div', 'info legend title san_legend'),
           grades = ["Medium", "High", "Very High", "Highest"];
 
-      div.innerHTML += '<b>Water Vulnerability</b><br>';
+      div.innerHTML += '<b>Sanitation Vulnerability</b><br>';
 
       // loop through our density intervals and generate a label with a colored square for each interval
       for (var i = 0; i < grades.length; i++) {
@@ -552,15 +545,15 @@ $("#text").click(function() {
       return div;
   };
 
-  // Create water vulnerability legend
+  // Create total disaster legend
   var d_legend = L.control({position: 'bottomright'});
 
-  water_legend.onAdd = function (map) {
+  d_legend.onAdd = function (map) {
 
-      var div = L.DomUtil.create('div', 'info legend title'),
+      var div = L.DomUtil.create('div', 'info legend title d_legend'),
           grades = ["Medium", "High", "Very High", "Highest"];
 
-      div.innerHTML += '<b>Water Vulnerability</b><br>';
+      div.innerHTML += '<b>Total Disasters</b><br>';
 
       // loop through our density intervals and generate a label with a colored square for each interval
       for (var i = 0; i < grades.length; i++) {
@@ -572,15 +565,15 @@ $("#text").click(function() {
       return div;
   };
 
-  // Create water vulnerability legend
+  // Create household vulnerability legend
   var hh_legend = L.control({position: 'bottomright'});
 
-  water_legend.onAdd = function (map) {
+  hh_legend.onAdd = function (map) {
 
-      var div = L.DomUtil.create('div', 'info legend title'),
+      var div = L.DomUtil.create('div', 'info legend title hh_legend'),
           grades = ["Medium", "High", "Very High", "Highest"];
 
-      div.innerHTML += '<b>Water Vulnerability</b><br>';
+      div.innerHTML += '<b>Household Vulnerability</b><br>';
 
       // loop through our density intervals and generate a label with a colored square for each interval
       for (var i = 0; i < grades.length; i++) {
@@ -592,30 +585,48 @@ $("#text").click(function() {
       return div;
   };
 
-// Update legend when base layer is changed
-  vuln_legend.addTo(map);
-  currentLegend = vuln_legend;
 
-  map.on('baselayerchange', function (eventLayer) {
-    if(eventLayer.name === 'Overall Vulnerability') {
-      map.removeControl(currentLegend);
-      currentLegend = vuln_legend;
-      vuln_legend.addTo(map);
-    } else if(eventLayer.name === 'Water Vulnerability') {
-      map.removeControl(currentLegend);
-      currentLegend = water_legend;
-      water_legend.addTo(map);
-    } else if(eventLayer.name === 'Sanitation Vulnerability') {
-      map.removeControl(currentLegend);
-      currentLegend = san_legend;
-      san_legend.addTo(map);
-    } else if(eventLayer.name === 'Household Vulnerability') {
-      map.removeControl(currentLegend);
-      currentLegend = hh_legend;
-      hh_legend.addTo(map);
-    } else if(eventLayer.name === 'Total Disasters') {
-      map.removeControl(currentLegend);
-      currentLegend = d_legend;
-      d_legend.addTo(map);
-    }
-  });
+// Update legend when base layer is changed
+ vuln_legend.addTo(map);
+ water_legend.addTo(map);
+ san_legend.addTo(map);
+ hh_legend.addTo(map);
+ d_legend.addTo(map);
+ $(".san_legend").hide();
+ $(".water_legend").hide();
+ $(".hh_legend").hide();
+ $(".d_legend").hide();
+
+ map.on('baselayerchange', function (eventLayer) {
+   if(eventLayer.name === 'Overall Vulnerability') {
+     $(".water_legend").hide();
+     $(".san_legend").hide();
+     $(".hh_legend").hide();
+     $(".d_legend").hide();
+     $(".vuln_legend").show();
+   } else if(eventLayer.name === 'Water Vulnerability') {
+     $(".vuln_legend").hide();
+     $(".san_legend").hide();
+     $(".hh_legend").hide();
+     $(".d_legend").hide();
+     $(".water_legend").show();
+   } else if(eventLayer.name === 'Sanitation Vulnerability') {
+     $(".vuln_legend").hide();
+     $(".water_legend").hide();
+     $(".hh_legend").hide();
+     $(".d_legend").hide();
+     $(".san_legend").show();
+   } else if(eventLayer.name === 'Household Vulnerability') {
+     $(".vuln_legend").hide();
+     $(".water_legend").hide();
+     $(".san_legend").hide();
+     $(".d_legend").hide();
+     $(".hh_legend").show();
+   } else if(eventLayer.name === 'Total Disasters') {
+     $(".vuln_legend").hide();
+     $(".water_legend").hide();
+     $(".san_legend").hide();
+     $(".hh_legend").hide();
+     $(".d_legend").show();
+   }
+});
