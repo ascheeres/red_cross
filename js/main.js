@@ -1,321 +1,621 @@
+// Define style functions for layers
 
-// Add the map, basemap, and attirbution
-var map = L.map('map', {
-    center: [7.480006, -9.947990],
-    zoom: 9,
-});
+ function getColor(d) {
+     return d == "Medium"       ? '#4475B5' :
+            d == "High"         ? '#BFCCBD' :
+            d == "Very High"    ? '#F9B984':
+            d == "Highest"      ? '#D62F26':
+                                  '#FFEDA0';
 
-var basemap0 = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-  subdomains: 'abcd',
-  minZoom: 6,
-  maxZoom: 15,
-  ext: 'png'
-}).addTo(map);
+ }
 
+ //This is the same but its to style the borders differently than the fill of the polygon
+ function getColor_border(d) {
+     return d == "Medium"     ? '#4475B5' :
+            d == "High"       ? '#96AE94' :
+            d == "Very High"  ? '#D38C52':
+            d == "Highest"    ? '#AB1A12':
+                                '#FFEDA0';
+ }
 
-// var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
-// attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-// subdomains: 'abcd',
-// minZoom: 7,
-// maxZoom: 15,
-// ext: 'png'
-// });
+ function w_getColor(d) {
+     return d == "Medium"     ? '#D3E4E8' :
+            d == "High"       ? '#97B3C6' :
+            d == "Very High"  ? '#053B64':
+            d == "Highest"    ? '#001B2F':
+                                '#FFEDA0';
+ }
 
-// map.options.maxZoom = 13;
-// map.options.minZoom = 7;
+ function w_getColor_border(d) {
+     return d == "Medium"     ? '#124689' :
+            d == "High"       ? '#4475B5' :
+            d == "Very High"  ? '#295FA4':
+            d == "Highest"    ? '#001B2F':
+                                '#FFEDA0';
+ }
 
-//default zoom
-var defaultViewFunc = function(){
-    map.setView([7.480006, -9.947990],9);
-};
+ function s_getColor(d) {
+     return d == "Medium"     ? '#DCF4E8' :
+            d == "High"       ? '#95C1A1' :
+            d == "Very High"  ? '#216632':
+            d == "Highest"    ? '#002109':
+                                '#FFEDA0';
+ }
 
-//This creates the button on the side that allows you to go back to the default View
-//
-L.easyButton('<img src="css/images/globe.png" class=globe >', function(btn, map){
-  defaultViewFunc();
-}).addTo(map);
+ function s_getColor_border(d) {
+     return d == "Medium"     ? '#5BBF8C' :
+            d == "High"       ? '#2E9248' :
+            d == "Very High"  ? '#106823':
+            d == "Highest"    ? '#002109':
+                                '#FFEDA0';
+ }
 
+ function d_getColor(d) {
+     return d == "Medium"     ? '#FFEBD6' :
+            d == "High"       ? '#EAA888' :
+            d == "Very High"  ? '#D65C44':
+            d == "Highest"    ? '#C40909':
+                                '#FFEDA0';
+ }
 
-function getColor(d) {
-    return d == "15.51 - 17.44"   ? '#4475B5' :
-           d == "17.45 - 19.37"   ? '#7393BA' :
-           d == "19.38 - 21.3"    ? '#A2B3BC':
-           d == "21.31 - 23.23"   ? '#CFD8BE':
-           d == "23.24 - 25.16"   ? '#FFFFBF':
-           d == "25.17 - 27.09"   ? '#FCCA92':
-           d == "27.1 - 29.01"    ? '#F49769':
-           d == "29.02 - 30.94"   ? '#E86645':
-           d == "30.95 - 32.87"   ? '#D62F26':
-                                    '#FFEDA0';
-}
+ function d_getColor_border(d) {
+     return d == "Medium"     ? '#CD965C' :
+            d == "High"       ? '#A54314' :
+            d == "Very High"  ? '#9B1800':
+            d == "Highest"    ? '#790000':
+                                '#FFEDA0';
+ }
 
-//This is the same but its to style the borders differently than the fill of the polygon
-function getColor_border(d) {
-    return d == "15.51 - 17.44"   ? '#124689' :
-           d == "17.45 - 19.37"   ? '#315784' :
-           d == "19.38 - 21.3"    ? '#4F7183':
-           d == "21.31 - 23.23"   ? '#899A68':
-           d == "23.24 - 25.16"   ? '#B3B34F':
-           d == "25.17 - 27.09"   ? '#AF7432':
-           d == "27.1 - 29.01"    ? '#B15221':
-           d == "29.02 - 30.94"   ? '#A42C0C':
-           d == "30.95 - 32.87"   ? '#840700':
-                                    '#FFEDA0';
-}
+ function hh_getColor(d) {
+     return d == "Medium"     ? '#DCBAF3' :
+            d == "High"       ? '#BC83E0' :
+            d == "Very High"  ? '#923AC6':
+            d == "Highest"    ? '#480470':
+                                '#FFEDA0';
+ }
 
-//This is an example of you would call the getColor function inside of a style function
-function getStyle(feature) {
+ function hh_getColor_border(d) {
+     return d == "Medium"     ? '#F7BDBB' :
+            d == "High"       ? '#1E4F8F' :
+            d == "Very High"  ? '#7AA6DF':
+            d == "Highest"    ? '#8A1E19':
+                                '#FFEDA0';
+ }
+
+ //This is an example of you would call the getColor function inside of a style function
+ function getStyle(feature) {
+   return {
+     radius: '3.0',
+     fillColor: getColor(feature.properties.Ranking),
+     color: getColor_border(feature.properties.Ranking),
+     weight: 1.5,
+     opacity: 0.5,
+     dashArray: '',
+     fillOpacity: '0.6'
+   };
+ }
+
+ function w_getStyle(feature) {
   return {
     radius: '3.0',
-    fillColor: getColor(feature.properties.Category),
-    color: getColor_border(feature.properties.Category),
+    fillColor: w_getColor(feature.properties.Ranking),
+    color: w_getColor_border(feature.properties.Ranking),
     weight: 1.5,
     opacity: 0.5,
     dashArray: '',
     fillOpacity: '0.6'
   };
-}
-
-//Style Function for a leaflet layer
- function boundaryStyle(feature) {
-     return {
-         weight: 4,
-         color: '#000000',
-         opacity: 1.0,
-         fillColor: 'none'
-     };
  }
 
- function pointStyle(feature) {
-     return {
-         radius: '4.0',
-         weight: 1.5,
-         color: '#FFFFFF',
-         fillColor: '#000000',
-         dashArray: '',
-         lineCap: 'square',
-         lineJoin: 'bevel',
-         opacity: 1.0,
-         fillOpacity: 1.0
-     };
+ function s_getStyle(feature) {
+  return {
+    radius: '3.0',
+    fillColor: s_getColor(feature.properties.Ranking),
+    color: s_getColor_border(feature.properties.Ranking),
+    weight: 1.5,
+    opacity: 0.5,
+    dashArray: '',
+    fillOpacity: '0.6'
+  };
  }
 
- function townStyle(feature) {
-       return {
-           size: 2
-       }
+ function d_getStyle(feature) {
+  return {
+    radius: '3.0',
+    fillColor: d_getColor(feature.properties.Ranking),
+    color: d_getColor_border(feature.properties.Ranking),
+    weight: 1.5,
+    opacity: 0.5,
+    dashArray: '',
+    fillOpacity: '0.6'
+  };
  }
 
-   function adminStyle(feature) {
-       return {
-           weight: 4,
-           color: '#000000',
-           fillColor: 'none'
-       };
-   }
+ function hh_getStyle(feature) {
+  return {
+    radius: '3.0',
+    fillColor: hh_getColor(feature.properties.Ranking),
+    color: hh_getColor_border(feature.properties.Ranking),
+    weight: 1.5,
+    opacity: 0.5,
+    dashArray: '',
+    fillOpacity: '0.6'
+  };
+ }
 
-   function roadStyle(feature) {
-       return {
-           weight: 2,
-           color: '#000000'
-       };
-   }
+ //Style Function for a leaflet layer
+  function boundaryStyle(feature) {
+      return {
+          weight: 4,
+          color: '#000000',
+          opacity: 1.0,
+          fillColor: 'none'
+      };
+  }
 
- //The legends should be worked on after we know what data is going in and what attributes are getting styled, leave it for now
+  function pointStyle(feature) {
+      return {
+          radius: '4.0',
+          weight: 1.5,
+          color: '#FFFFFF',
+          fillColor: '#000000',
+          dashArray: '',
+          lineCap: 'square',
+          lineJoin: 'bevel',
+          opacity: 1.0,
+          fillOpacity: 1.0
+      };
+  }
 
- var legend = L.control({position: 'bottomright'});
+  function townStyle(feature) {
+        return {
+            size: 2
+        }
+  }
 
- legend.onAdd = function (map) {
+    function adminStyle(feature) {
+        return {
+            weight: 4,
+            color: '#000000',
+            fillColor: 'none'
+        };
+    }
 
-     var div = L.DomUtil.create('div', 'info legend title'),
-         grades = ["15.51 - 17.44", "17.45 - 19.37", "19.38 - 21.3", "21.31 - 23.23", "23.24 - 25.16", "25.17 - 27.09",
-                   "27.1 - 29.01", "29.02 - 30.94", "30.95 - 32.87"];
+    function roadStyle(feature) {
+        return {
+            weight: 2,
+            color: '#000000'
+        };
+    }
 
-     div.innerHTML += '<b>Overall Vulnerability</b><br>';  // don't forget the break tag
+    //This is what happens whenever you mouse over a point
+    function eachPoint(feature, layer) {
+      layer.bindPopup("<strong>Village Name:</strong>" + " " + feature.properties.namevill + "<br>" + "<strong>County:</strong>" + " " + feature.properties.region +
+    "<br>" + "<strong>Overall Vulnerability Score:</strong>" + " " + feature.properties.finalindex + "<br>" + "<strong>Number of Total Disasters:</strong> " + " " + feature.properties.totdist +
+    "<br>" + "<strong>Household Vulnerability:</strong> " + " " + feature.properties.hhindex + "<br>" + "<strong>Water Vulnerability:</strong> " + " " + feature.properties.water_inde +
+    "<br>" + "<strong>Sanitation:</strong> " + " " + feature.properties.sanitation);
+      layer.on({
+        mouseover: function(e){
+          layer.setStyle({
+            radius: '6.0',
+            fillOpacity: 1
+          });
+        },
+        mouseout: function(e) {
+          layer.setStyle(pointStyle(feature));
+        },
+      });
+    }
 
-     // loop through our density intervals and generate a label with a colored square for each interval
-     for (var i = 0; i < grades.length; i++) {
-         div.innerHTML +=
-             '<i class="circle" style="background:' + getColor(grades[i]) + '"></i> ' +
-            (grades[i] ? grades[i] + '<br>' : '+');
-     }
+    //This is what happens whenever you mouseover a polygon
+    function eachPoly(feature, layer) {
+      layer.bindPopup("<strong>Average Vulnerability Score:</strong> " + "<br>" + feature.properties.Score);
+      layer.on({
+        mouseover: function(e){
+          layer.setStyle({
+            fillOpacity: 1.0
+          });
+            // info.update(layer.feature.properties);
+        },
+        mouseout: function(e) {
+          layer.setStyle(getStyle(feature));
+          //  info.update();
+        },
+        click: function (e){
+          var bounds = this.getBounds();
+          // map.fitBounds(bounds);
+        },
+      });
+    }
 
-     return div;
- };
+    function w_eachPoly(feature, layer) {
+      layer.bindPopup("<strong>Average Vulnerability Score:</strong> " + "<br>" + feature.properties.Score);
+      layer.on({
+        mouseover: function(e){
+          layer.setStyle({
+            fillOpacity: 1.0
+          });
+            // info.update(layer.feature.properties);
+        },
+        mouseout: function(e) {
+          layer.setStyle(w_getStyle(feature));
+          //  info.update();
+        },
+        click: function (e){
+          var bounds = this.getBounds();
+          // map.fitBounds(bounds);
+        },
+      });
+    }
 
- legend.addTo(map);
+    function s_eachPoly(feature, layer) {
+      layer.bindPopup("<strong>Average Vulnerability Score:</strong> " + "<br>" + feature.properties.Score);
+      layer.on({
+        mouseover: function(e){
+          layer.setStyle({
+            fillOpacity: 1.0
+          });
+            // info.update(layer.feature.properties);
+        },
+        mouseout: function(e) {
+          layer.setStyle(s_getStyle(feature));
+          //  info.update();
+        },
+        click: function (e){
+          var bounds = this.getBounds();
+          // map.fitBounds(bounds);
+        },
+      });
+    }
 
-//**********************************************************************************************************************
+    function d_eachPoly(feature, layer) {
+      layer.bindPopup("<strong>Average Vulnerability Score:</strong> " + "<br>" + feature.properties.Score);
+      layer.on({
+        mouseover: function(e){
+          layer.setStyle({
+            fillOpacity: 1.0
+          });
+            // info.update(layer.feature.properties);
+        },
+        mouseout: function(e) {
+          layer.setStyle(d_getStyle(feature));
+          //  info.update();
+        },
+        click: function (e){
+          var bounds = this.getBounds();
+          // map.fitBounds(bounds);
+        },
+      });
+    }
 
+    function hh_eachPoly(feature, layer) {
+      layer.bindPopup("<strong>Average Vulnerability Score:</strong> " + "<br>" + feature.properties.Score);
+      layer.on({
+        mouseover: function(e){
+          layer.setStyle({
+            fillOpacity: 1.0
+          });
+            // info.update(layer.feature.properties);
+        },
+        mouseout: function(e) {
+          layer.setStyle(hh_getStyle(feature));
+          //  info.update();
+        },
+        click: function (e){
+          var bounds = this.getBounds();
+          // map.fitBounds(bounds);
+        },
+      });
+    }
 
-var admin = new L.geoJson(boundaries, {
+    function eachTown(feature, layer) {
+        layer.bindPopup("<strong>Town:</strong> " + "<br>" + feature.properties.name);
+        layer.on({
+          click: function (e) {
+            var bounds = this.getBounds();
+          },
+        });
+    }
+
+// Define map layers as variables
+var osm = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  subdomains: 'abcd',
+  minZoom: 6,
+  maxZoom: 12,
+  ext: 'png'
+});
+
+var admin = new L.geoJson (boundaries, {
      style: adminStyle
-}).addTo(map);
+});
 
 var countries = new L.geoJson (countries, {
      style: boundaryStyle
-}).addTo(map);
+});
 
 var large_towns = new L.geoJson (large_towns, {
      onEachFeature: eachTown,
      style: townStyle
-}).addTo(map);
+});
 
 var roads = new L.geoJson (roads, {
      style: roadStyle
-}).addTo(map);
+});
 
 var vulnerability = new L.geoJson (vuln, {
       onEachFeature: eachPoly,
       style: getStyle
-}).addTo(map);
+});
 
 var water_vuln = new L.geoJson(water_vuln, {
-      style: getStyle
-}).addTo(map);
+      onEachFeature: w_eachPoly,
+      style: w_getStyle
+});
 
-var buffer = new L.geoJson(buffer_outline, {
+var water_buffer = new L.geoJson(water_buffer, {
       style: boundaryStyle
-}).addTo(map);
+});
+
+var overall_buffer = new L.geoJson(overall_buffer, {
+      style: boundaryStyle
+});
+
+var san_vuln = new L.geoJson(san_vuln, {
+      style: s_getStyle,
+      onEachFeature: s_eachPoly
+});
+
+var san_buffer = new L.geoJson(san_buffer, {
+      style: boundaryStyle
+});
+
+var dist_vuln = new L.geoJson(dist_vuln, {
+      style: d_getStyle,
+      onEachFeature: d_eachPoly
+});
+
+var dist_buffer = new L.geoJson(dist_buffer, {
+      style: boundaryStyle
+});
+
+var hh_vuln = new L.geoJson(hh_vuln, {
+      style: hh_getStyle,
+      onEachFeature: hh_eachPoly
+});
+
+var hh_buffer = new L.geoJson(hh_buffer, {
+      style: boundaryStyle
+});
 
 var points = new L.geoJson(communities, {
      onEachFeature: eachPoint,
      pointToLayer: function (feature, latlng) {
          return L.circleMarker(latlng, pointStyle(feature));
      }
+ });
+
+// Create group layers for vulnerability layers and corresponding buffers
+var vulnbuf = L.layerGroup([vulnerability, overall_buffer]);
+
+var waterbuf = L.layerGroup([water_vuln, water_buffer]);
+
+var sanbuf = L.layerGroup([san_vuln, san_buffer]);
+
+var distbuf = L.layerGroup([dist_vuln, dist_buffer]);
+
+var hhbuf = L.layerGroup([hh_vuln, hh_buffer]);
+
+ var baselayers = {
+     "Overall Vulnerability": vulnbuf,
+     "Water Vulnerability": waterbuf,
+     "Sanitation Vulnerability": sanbuf,
+     "Household Vulnerability": hhbuf,
+     "Total Disasters": distbuf
+ };
+
+ var overlays = {
+     "Villages": points,
+     "Large Towns": large_towns
+ };
+
+ // Add the map, basemap, and attirbution
+ var map = L.map('map', {
+     center: [7.480006, -9.947990],
+     zoom: 9,
+     layers: [osm, admin, countries, roads, vulnbuf, points, large_towns]
+ });
+
+// Create array of all vector layers in their drawing order, back to front: this is for ensuring proper layering in the dynamic map
+var mapLayers = [osm, admin, countries, roads, vulnerability, water_vuln, overall_buffer, water_buffer, points, large_towns];
+
+// Add layer controls and scale control to map
+L.control.layers(baselayers, overlays).addTo(map);
+L.control.scale({options: {position: 'bottomleft', maxWidth: 100, metric: true, imperial: false, updateWhenIdle: false}}).addTo(map);
+
+ //default zoom
+ var defaultViewFunc = function(){
+     map.setView([7.480006, -9.947990],9);
+ };
+
+ // Reorder map layers
+map.on('baselayerchange', function() {
+  for( i = 1; i < 9; i++){
+  	if(map.hasLayer(mapLayers[i])){
+  		mapLayers[i].bringToFront();
+  	}};
+});
+
+// Create variable containing original html text in sidebar
+var defaultText = $("#text").html();
+
+// Change informational text when base layer is changed
+map.on('baselayerchange', function(eventLayer) {
+    if(eventLayer.name === 'Overall Vulnerability') {
+      $("#text").empty();
+      $("#text").append("<p>(Click here to return to project overview)</p>");
+    }
+    if(eventLayer.name === 'Water Vulnerability') {
+      $("#text").empty();
+      $("#text").append("<p>(Click here to return to project overview)</p>");
+    }
+});
+map.on('overlayadd', function(eventLayer) {
+  if(eventLayer.name === 'Villages') {
+    $("#text").empty();
+    $("#text").html(defaultText);
+  }
+  if(eventLayer.name === 'Large Towns') {
+    $("#text").empty();
+    $("#text").html(defaultText);
+  }
+});
+
+// Revert text to original description by clicking on sidebar
+$("#text").click(function() {
+  $("#text").empty();
+  $("#text").html(defaultText);
+});
+
+ //This creates the button on the side that allows you to go back to the default View
+ L.easyButton('<img src="css/images/globe.png" class=globe >', function(btn, map){
+   defaultViewFunc();
  }).addTo(map);
 
-//This is what happens whenever you mouse over a point
-function eachPoint(feature, layer) {
-  layer.bindPopup("<strong>Village Name:</strong>" + " " + feature.properties.namevill + "<br>" + "<strong>County:</strong>" + " " + feature.properties.region +
-"<br>" + "<strong>Overall Vulnerability Score:</strong>" + " " + feature.properties.finalindex + "<br>" + "<strong>Number of Total Disasters:</strong> " + " " + feature.properties.totdist +
-"<br>" + "<strong>Household Vulnerability:</strong> " + " " + feature.properties.hhindex + "<br>" + "<strong>Water Vulnerability:</strong> " + " " + feature.properties.water_inde +
-"<br>" + "<strong>Sanitation:</strong> " + " " + feature.properties.sanitation);
-  layer.on({
-    mouseover: function(e){
-      layer.setStyle({
-        radius: '6.0',
-        fillOpacity: 1
-      });
-    },
-    mouseout: function(e) {
-      layer.setStyle(pointStyle(feature));
-    },
-  });
-}
+// Create overlay legend
+// var overlay_legend = L.control({position: 'bottomright'});
+//
+// overlay_legend.onAdd = function(map) {
+//
+//     var div = L.DomUtil.create('div', 'info legend title'),
+//           grades =
+// }
 
-//This is what happens whenever you mouseover a polygon
-function eachPoly(feature, layer) {
-  layer.bindPopup("<strong>Average Vulnerability Score:</strong> " + "<br>" + feature.properties.Category);
-  layer.on({
-    mouseover: function(e){
-      layer.setStyle({
-        fillOpacity: 1.0
-      });
-        // info.update(layer.feature.properties);
-    },
-    mouseout: function(e) {
-      layer.setStyle(getStyle(feature));
-      //  info.update();
-    },
-    click: function (e){
-      var bounds = this.getBounds();
-      // map.fitBounds(bounds);
-    },
-  });
-}
+// Create overall vulnerability legend
+  var vuln_legend = L.control({position: 'bottomright'});
 
-function eachTown(feature, layer) {
-    layer.bindPopup("<strong>Town:</strong> " + "<br>" + feature.properties.name);
-    layer.on({
-      click: function (e) {
-        var bounds = this.getBounds();
-      },
-    });
-}
+  vuln_legend.onAdd = function (map) {
 
+      var div = L.DomUtil.create('div', 'info legend title'),
+          grades = ["Medium", "High", "Very High", "Highest"];
 
-    //***************************************This Section Controls The Order of Your Layers in Your Layer Selector********************************
-    var feature_group = new L.featureGroup([]);
-    var bounds_group = new L.featureGroup([]);
-    var raster_group = new L.LayerGroup([]);
-    var initialOrder = [];
-    var layerOrder = [];
-    function stackLayers() {
-        for (index = 0; index < initialOrder.length; index++) {
-            map.removeLayer(initialOrder[index]);
-            map.addLayer(initialOrder[index]);
-        }
-    }
-    function restackLayers() {
-        for (index = 0; index < layerOrder.length; index++) {
-            layerOrder[index].bringToFront();
-        }
-    }
+      div.innerHTML += '<b>Overall Vulnerability</b><br>';  // don't forget the break tag
 
-    layerOrder[layerOrder.length] = admin;
-    bounds_group.addLayer(admin);
-    initialOrder[initialOrder.length] = admin;
-    feature_group.addLayer(admin);
-
-    layerOrder[layerOrder.length] = vulnerability;
-    bounds_group.addLayer(vulnerability);
-    initialOrder[initialOrder.length] = vulnerability;
-    feature_group.addLayer(vulnerability);
-
-    layerOrder[layerOrder.length] = buffer;
-    bounds_group.addLayer(buffer);
-    initialOrder[initialOrder.length] = buffer;
-    feature_group.addLayer(buffer);
-
-    layerOrder[layerOrder.length] = points;
-    bounds_group.addLayer(points);
-    initialOrder[initialOrder.length] = points;
-    feature_group.addLayer(points);
-
-
-    raster_group.addTo(map);
-    feature_group.addTo(map);
-
-//***************************************This Section Controls Your Layer Selector********************************
-var baseMap = {
-    "Grayscale": basemap0,
-    // "stamen": Stamen_TonerLite
-    // "Streets": streets
-};
-
-var overlayMaps = {
-    "Villages": points,
-    "Overall Vulnerability": vulnerability,
-    "Water Vulnerability": water_vuln,
-    "3 Mile Buffer": buffer,
-    "Large Towns": large_towns
-};
-
-    // Removes legend if vulnerability is removed
-    map.on('overlayremove', function (eventLayer) {
-
-      if (eventLayer.name == "Overall Vulnerability"){
-        map.removeControl(legend);
+      // loop through our density intervals and generate a label with a colored square for each interval
+      for (var i = 0; i < grades.length; i++) {
+          div.innerHTML +=
+              '<i class="circle" style="background:' + getColor(grades[i]) + '"></i> ' +
+             (grades[i] ? grades[i] + '<br>' : '+');
       }
-      });
 
-      // Adds the legend if vulnerability is added
+      return div;
+  };
 
-      map.on('overlayadd', function (eventLayer) {
 
-        if (eventLayer.name == "Overall Vulnerability"){
-          map.addControl(legend);
+  // Create water vulnerability legend
+  var water_legend = L.control({position: 'bottomright'});
 
-        }
-        });
+  water_legend.onAdd = function (map) {
 
-      //Calls the restackLayers function to make sure they are in the right order
-      map.on('overlayadd', restackLayers);
+      var div = L.DomUtil.create('div', 'info legend title'),
+          grades = ["Medium", "High", "Very High", "Highest"];
 
-L.control.layers(baseMap, overlayMaps).addTo(map);
-//*********************************************************************************************************************
+      div.innerHTML += '<b>Water Vulnerability</b><br>';
 
-//This is the scale bar
-L.control.scale({options: {position: 'bottomleft', maxWidth: 100, metric: true, imperial: false, updateWhenIdle: false}}).addTo(map);
+      // loop through our density intervals and generate a label with a colored square for each interval
+      for (var i = 0; i < grades.length; i++) {
+          div.innerHTML +=
+              '<i class="circle" style="background:' + w_getColor(grades[i]) + '"></i> ' +
+             (grades[i] ? grades[i] + '<br>' : '+');
+      }
+
+      return div;
+  };
+
+  // Create water vulnerability legend
+  var san_legend = L.control({position: 'bottomright'});
+
+  water_legend.onAdd = function (map) {
+
+      var div = L.DomUtil.create('div', 'info legend title'),
+          grades = ["Medium", "High", "Very High", "Highest"];
+
+      div.innerHTML += '<b>Water Vulnerability</b><br>';
+
+      // loop through our density intervals and generate a label with a colored square for each interval
+      for (var i = 0; i < grades.length; i++) {
+          div.innerHTML +=
+              '<i class="circle" style="background:' + s_getColor(grades[i]) + '"></i> ' +
+             (grades[i] ? grades[i] + '<br>' : '+');
+      }
+
+      return div;
+  };
+
+  // Create water vulnerability legend
+  var d_legend = L.control({position: 'bottomright'});
+
+  water_legend.onAdd = function (map) {
+
+      var div = L.DomUtil.create('div', 'info legend title'),
+          grades = ["Medium", "High", "Very High", "Highest"];
+
+      div.innerHTML += '<b>Water Vulnerability</b><br>';
+
+      // loop through our density intervals and generate a label with a colored square for each interval
+      for (var i = 0; i < grades.length; i++) {
+          div.innerHTML +=
+              '<i class="circle" style="background:' + d_getColor(grades[i]) + '"></i> ' +
+             (grades[i] ? grades[i] + '<br>' : '+');
+      }
+
+      return div;
+  };
+
+  // Create water vulnerability legend
+  var hh_legend = L.control({position: 'bottomright'});
+
+  water_legend.onAdd = function (map) {
+
+      var div = L.DomUtil.create('div', 'info legend title'),
+          grades = ["Medium", "High", "Very High", "Highest"];
+
+      div.innerHTML += '<b>Water Vulnerability</b><br>';
+
+      // loop through our density intervals and generate a label with a colored square for each interval
+      for (var i = 0; i < grades.length; i++) {
+          div.innerHTML +=
+              '<i class="circle" style="background:' + hh_getColor(grades[i]) + '"></i> ' +
+             (grades[i] ? grades[i] + '<br>' : '+');
+      }
+
+      return div;
+  };
+
+// Update legend when base layer is changed
+  vuln_legend.addTo(map);
+  currentLegend = vuln_legend;
+
+  map.on('baselayerchange', function (eventLayer) {
+    if(eventLayer.name === 'Overall Vulnerability') {
+      map.removeControl(currentLegend);
+      currentLegend = vuln_legend;
+      vuln_legend.addTo(map);
+    } else if(eventLayer.name === 'Water Vulnerability') {
+      map.removeControl(currentLegend);
+      currentLegend = water_legend;
+      water_legend.addTo(map);
+    } else if(eventLayer.name === 'Sanitation Vulnerability') {
+      map.removeControl(currentLegend);
+      currentLegend = san_legend;
+      san_legend.addTo(map);
+    } else if(eventLayer.name === 'Household Vulnerability') {
+      map.removeControl(currentLegend);
+      currentLegend = hh_legend;
+      hh_legend.addTo(map);
+    } else if(eventLayer.name === 'Total Disasters') {
+      map.removeControl(currentLegend);
+      currentLegend = d_legend;
+      d_legend.addTo(map);
+    }
+  });
