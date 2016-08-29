@@ -75,10 +75,10 @@
  }
 
  function hh_getColor_border(d) {
-     return d == "Medium"     ? '#F7BDBB' :
-            d == "High"       ? '#1E4F8F' :
-            d == "Very High"  ? '#7AA6DF':
-            d == "Highest"    ? '#8A1E19':
+     return d == "Medium"     ? '#9E63C6' :
+            d == "High"       ? '#803BAC' :
+            d == "Very High"  ? '#600894':
+            d == "Highest"    ? '#240139':
                                 '#FFEDA0';
  }
 
@@ -146,7 +146,7 @@
  //Style Function for a leaflet layer
   function boundaryStyle(feature) {
       return {
-          weight: 4,
+          weight: 3,
           color: '#000000',
           opacity: 1.0,
           fillColor: 'none'
@@ -175,16 +175,16 @@
 
     function adminStyle(feature) {
         return {
-            weight: 4,
-            color: '#000000',
+            weight: 2.5,
+            color: 'grey',
             fillColor: 'none'
         };
     }
 
     function roadStyle(feature) {
         return {
-            weight: 2,
-            color: '#000000'
+            weight: 2.5,
+            color: '#550000'
         };
     }
 
@@ -193,7 +193,7 @@
       layer.bindPopup("<strong>Village Name:</strong>" + " " + feature.properties.namevill + "<br>" + "<strong>County:</strong>" + " " + feature.properties.region +
     "<br>" + "<strong>Overall Vulnerability Score:</strong>" + " " + feature.properties.finalindex + "<br>" + "<strong>Number of Total Disasters:</strong> " + " " + feature.properties.totdist +
     "<br>" + "<strong>Household Vulnerability:</strong> " + " " + feature.properties.hhindex + "<br>" + "<strong>Water Vulnerability:</strong> " + " " + feature.properties.water_inde +
-    "<br>" + "<strong>Sanitation:</strong> " + " " + feature.properties.sanitation);
+    "<br>" + "<strong>Sanitation:</strong> " + " " + feature.properties.sanitation + "<br>" + "<strong>Most Vulnerable Sector:</strong>" + " " + feature.properties.firstIndex);
       layer.on({
         mouseover: function(e){
           this.openPopup();
@@ -418,18 +418,20 @@ var hhbuf = L.layerGroup([hh_vuln, hh_buffer]);
 
  var overlays = {
      "Villages": points,
-     "Large Towns": large_towns
+     "Large Towns": large_towns,
+     "Administrative Boundaries": admin,
+     "Road Network": roads
  };
 
  // Add the map, basemap, and attirbution
  var map = L.map('map', {
      center: [7.480006, -9.947990],
      zoom: 9,
-     layers: [osm, admin, countries, roads, vulnbuf, points, large_towns]
+     layers: [osm, admin, vulnbuf, points, large_towns]
  });
 
 // Create array of all vector layers in their drawing order, back to front: this is for ensuring proper layering in the dynamic map
-var mapLayers = [osm, admin, countries, roads, vulnerability, water_vuln, overall_buffer, water_buffer, points, large_towns];
+var mapLayers = [osm, countries, roads, points, large_towns];
 
 // Add layer controls and scale control to map
 L.control.layers(baselayers, overlays).addTo(map);
@@ -442,7 +444,7 @@ L.control.scale({options: {position: 'bottomleft', maxWidth: 100, metric: true, 
 
  // Reorder map layers
 map.on('baselayerchange', function() {
-  for( i = 1; i < 9; i++){
+  for( i = 1; i < 12; i++){
   	if(map.hasLayer(mapLayers[i])){
   		mapLayers[i].bringToFront();
   	}};
@@ -455,11 +457,27 @@ var defaultText = $("#text").html();
 map.on('baselayerchange', function(eventLayer) {
     if(eventLayer.name === 'Overall Vulnerability') {
       $("#text").empty();
-      $("#text").append("<p>(Click here to return to project overview)</p>");
+      $("#text").append("<p>(Click here to return to project overview)</p> <p>This map shows communities' overall vulnerability. Overall vulnerability was calculated by summing the individual vulnerability sectors. Kriging, which is a type of spatial interpolation that produces a statistically-weighted surface, was used to visualize overall vulnerability. Kriging produces a smooth, continuous surface (called raster data), which was then converted into discrete polygons (called vector data). Polygons within the same vulnerability category were dissolved to allow the user to easily see which communities are in the same vulnerability categories.</p> <p>Communities with high overall vulnerability scored high in multiple vulnerability sectors, while communities with lower overall vulnerability either scored lower in multiple vulnerability sectors or only scored high in one or two vulnerability sectors. </p>");
     }
     if(eventLayer.name === 'Water Vulnerability') {
       $("#text").empty();
-      $("#text").append("<p>(Click here to return to project overview)</p>");
+      $("#text").append("<p>(Click here to return to project overview)</p> <p>This map shows communities’ vulnerability with respect to water. Water-related vulnerability was calculated based on a community’s water source and the time required to fetch water. Communities received a higher vulnerability score if their primary drinking water source was an unimproved water source (ex. unprotected dug well, unprotected spring, surface water, bottled water) as opposed to an improved source (piped water into dwelling, public tap or standpipe, tubewell, protected spring/dug well). High vulnerability scores were also assigned to communities where fetching water required more than 30 minutes. </p>");
+    }
+    if(eventLayer.name === 'Sanitation Vulnerability') {
+      $("#text").empty();
+      $("#text").append("<p>(Click here to return to project overview)</p> <p>This map shows vulnerability with respect to sanitation, which focuses on improved versus unimproved facilities. Communities received a higher vulnerability score if most residents used unimproved sanitation facilities (ex. pit latrine without slab, shared or public toilet facilities, unpiped flush toilets) as opposed to improved sanitation facilities (ex. piped flush toilets, composting toilet, pit latrine with slab). </p>");
+    }
+    if(eventLayer.name === 'Household Vulnerability') {
+      $("#text").empty();
+      $("#text").append("<p>(Click here to return to project overview)</p> <p>This map shows vulnerability with respect to household conditions. Communities received a higher vulnerability score if most residents have an unimproved type of floor (ex. earth, sand, etc) as opposed to an improved type of floor (ex. wood planks, cement, carpet, vinyl). Floor type has been identified as an indicator of general household materials, so homes with unimproved floors are typically home to more vulnerable people. </p>");
+    }
+    if(eventLayer.name === 'Total Disasters') {
+      $("#text").empty();
+      $("#text").append("<p>(Click here to return to project overview)</p> <p>This map shows vulnerability with respect to disasters, which includes drought, famine, flooding, wildfires, Ebola Virus Disease, other epidemics, or armed conflict. Communities received a higher vulnerability score if the community leader reported that the area had experienced more disasters in the past year. This question was asked in terms of the past year because we wanted to have a consistent time frame to ask each community, and one year was long enough to include a full year of seasons and time, but also short enough that it would be easy for respondents to differentiate and think through. </p>");
+    }
+    if(eventLayer.name === 'High Traffic Vulnerability') {
+      $("#text").empty();
+      $("#text").append("<p>(Click here to return to project overview)</p> <p>This map shows vulnerability with respect to household conditions. Communities received a higher vulnerability score if most residents have an unimproved type of floor (ex. earth, sand, etc) as opposed to an improved type of floor (ex. wood planks, cement, carpet, vinyl). Floor type has been identified as an indicator of general household materials, so homes with unimproved floors are typically home to more vulnerable people. </p>");
     }
 });
 map.on('overlayadd', function(eventLayer) {
@@ -479,7 +497,7 @@ $("#text").click(function() {
   $("#text").html(defaultText);
 });
 
- //This creates the button on the side that allows you to go back to the default View
+ //This creates the button on the side that allows you to go back to the default view
  L.easyButton('<img src="css/images/globe.png" class=globe >', function(btn, map){
    defaultViewFunc();
  }).addTo(map);
