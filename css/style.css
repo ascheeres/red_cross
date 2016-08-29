@@ -64,6 +64,21 @@ div.leaflet-control-layers.leaflet-control.leaflet-control-layers-expanded {
 div.leaflet-popup-content {
   font-size: 1.7vh;
 }
+div.info.legend.title.vuln_legend.leaflet-control {
+  background: white;
+}
+div.info.legend.title.d_legend.leaflet-control {
+  background: white;
+}
+div.info.legend.title.hh_legend.leaflet-control {
+  background: white;
+}
+div.info.legend.title.san_legend.leaflet-control {
+  background: white;
+}
+div.info.legend.title.water_legend.leaflet-control {
+  background: white;
+}
 #provType{
   margin: 0 0 5px;
   color: #777;
